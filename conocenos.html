@@ -1310,4 +1310,12 @@ sim.addEventListener('click',e=>{if(e.target===sim)sim.close();});
 (()=>{const s=document.querySelector('.pv-coasts');if(!s)return;if(!('IntersectionObserver' in window)){s.classList.add('is-in');return;}
 const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){s.classList.add('is-in');io.disconnect();}}),{threshold:.25});io.observe(s);})();
 </script>
+<script id="activacion-secciones">
+/* Respaldo: activa las animaciones de las secciones 2 (mapa) y 3 (historia) al hacer scroll,
+   aunque el navegador no dispare IntersectionObserver. */
+(()=>{const els=[...document.querySelectorAll('.pv-coasts,.pv-origin')];if(!els.length)return;
+const check=()=>{const vh=innerHeight||document.documentElement.clientHeight;els.forEach(el=>{if(el.classList.contains('is-in'))return;const r=el.getBoundingClientRect();if(r.top<vh*.8&&r.bottom>vh*.1)el.classList.add('is-in');});};
+addEventListener('scroll',check,{passive:true});addEventListener('resize',check);addEventListener('load',check);
+document.addEventListener('scroll',check,{passive:true,capture:true});setTimeout(check,300);check();})();
+</script>
 </body></html>
